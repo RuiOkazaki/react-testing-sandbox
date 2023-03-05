@@ -55,10 +55,13 @@ describe("NativeFetch", () => {
     ;(global.fetch as jest.Mock).mockClear()
   })
   test("render:loding", async () => {
+    // mockImplementation:
+    // mock関数が呼ばれた時の処理を作成する
     global.fetch = jest.fn().mockImplementation(dataPokemonsMock)
     const { asFragment } = render(<WrappedNativeFetch size={5} />)
     screen.getByText("loading...")
     expect(asFragment()).toMatchSnapshot()
+    // waitForElementToBeRemoved: 引数に指定した要素がDOMから削除されるまで待つ
     await waitForElementToBeRemoved(() => screen.getByText("loading..."))
   })
   test("render:pokemons", async () => {
@@ -71,6 +74,7 @@ describe("NativeFetch", () => {
   test("render:no pokemon", async () => {
     global.fetch = jest.fn().mockImplementation(noDataPokemonsMock)
     const { asFragment } = render(<WrappedNativeFetch size={0} />)
+    // waitFor: 引数に指定した関数がtruesyを返すまで待つ
     await waitFor(() => screen.getByText("no pokemon"))
     expect(asFragment()).toMatchSnapshot()
   })
