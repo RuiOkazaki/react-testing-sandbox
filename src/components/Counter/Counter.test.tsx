@@ -4,8 +4,12 @@ import { Counter } from "./"
 
 describe("Counter", () => {
   test("render", () => {
-    const { asFragment } = render(<Counter />)
+    // asFragmentとは、renderした結果を返す
+    const { asFragment, getByText } = render(<Counter />)
+    // snapshotを作成する
     expect(asFragment()).toMatchSnapshot()
+    // 画面に表示されているか
+    getByText("Count: 0")
   })
   test("click:count", () => {
     render(<Counter />)
